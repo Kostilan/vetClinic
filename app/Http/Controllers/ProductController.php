@@ -8,6 +8,19 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
+    public function catalog()
+    {
+        $products = Product::all();
+        return view("catalog", ["products"=>$products]);
+    }
+
+    public function product_sale( $id)
+    {
+        $products = Product::findOrFail($id);
+        // dd($products);
+        return view("product", ["product"=>$products]);
+    }
+
     public function create_product(Request $request)
     { 
     //  Валидация

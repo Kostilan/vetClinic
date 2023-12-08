@@ -21,13 +21,13 @@
     <nav class="navbar navbar-light ">
         <div class="container-fluid ">
             <a href="/" class="navbar-brand  ">Клиника</a>
+            <a href="/catalog" class="navbar-brand  ">Каталог</a>
             @guest
             <a id="log_in" href="{{ route('login') }}" class="nav-item nav-link">Вход</a>
             <a id="sign_in" href="{{ route('register') }}" class="nav-item nav-link">Регистрация</a>  
             @endguest
             @auth
             <a href="/account" class="nav-item nav-link">В кабинет</a>
-            <a href="" class="nav-item nav-link">Покупка товаров</a>
             <form action="/logout" method="POST" class="form-inline">
               @csrf
               <input type="submit" class="btn btn-danger" value="Выход">

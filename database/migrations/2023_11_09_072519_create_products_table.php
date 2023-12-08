@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('title',100);
+            $table->string('title',200);
+            $table->integer('article')->autoIncrement();
             $table->string('photo',200)->default('');
             $table->integer('product_quantity');
-            $table->string('product_purpose',100);
+            $table->string('product_purpose',800);
             $table->integer('cost');
             $table->foreignId('product_type_id')->constrained('product_types');
             $table->foreignId('product_special_id')->constrained('product_specials');

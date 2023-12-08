@@ -11,6 +11,8 @@ use App\Http\Controllers\ProductController;
 
 
 Route::get('/', [PetController::class, "index"]);
+Route::get("/catalog", [ProductController::class, 'catalog']);
+Route::get("/product_sale{id}", [ProductController::class, 'product_sale']);
 // Регистрация
 Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register');
 Route::post('/signup', [UserController::class, 'signup'])->name('signup');
@@ -37,4 +39,6 @@ Route::post('/create_product', [App\Http\Controllers\ProductController::class, '
 Route::post('/edit_product', [App\Http\Controllers\ProductController::class, 'edit_product'])->name('edit_product');
 
 Route::delete('/delete_product/{product}', [App\Http\Controllers\ProductController::class, 'delete_product'])->name('delete_product');
+
+// Продукт
 

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'продукты')
+@section('title', 'Продукты')
 
 @section('content')
 
@@ -16,8 +16,9 @@
                 <img src="{{ $item->photo }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">{{ $item->title }}</h5>
-                    <p class="card-text">{{ $item->product_purpose }}</p>
-                    <p class="card-text">{{ $item->cost }}</p>
+                    <p class="card-text">Тип продукта: {{ $item->Product_special->title_special}}</p>
+                    <p class="card-text">Специализация продукта: {{ $item->Product_type->title_type}}</p>
+                    <p class="card-text">{{ $item->cost }}₽</p>
                     <a href="/product_sale{{ $item->id }}" class="btn btn-primary">Подробнее</a>
                     <a href="#" class="btn btn-primary">Заказать</a>
                 </div>

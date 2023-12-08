@@ -5,20 +5,28 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pet;
 use App\Models\Product;
+use App\Models\Product_special;
+use App\Models\Product_type;
 
 class ProductController extends Controller
 {
     public function catalog()
     {
         $products = Product::all();
+        // $type = Product_type::findOrFail($products->product_type_id);
+        // $special = Product_special::findOrFail($products->product_type_id);
         return view("catalog", ["products"=>$products]);
     }
 
     public function product_sale( $id)
     {
-        $products = Product::findOrFail($id);
+        $product = Product::findOrFail($id);
+        // $type = Product_type::findOrFail($product->product_type_id);
+        // $special = Product_special::findOrFail($product->product_type_id);
+        // "type"=>$type, "special"=>$special
         // dd($products);
-        return view("product", ["product"=>$products]);
+        return view("product", ["product"=>$product, ]
+    );
     }
 
     public function create_product(Request $request)

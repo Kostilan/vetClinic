@@ -10,6 +10,12 @@ use App\Models\Product_type;
 
 class ProductController extends Controller
 {
+    public function basket()
+    {
+        $products = Product::all();
+
+        return view("basket", compact("products"));
+    }
     public function catalog()
     {
         $products = Product::all();

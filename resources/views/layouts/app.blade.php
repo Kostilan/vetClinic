@@ -27,6 +27,7 @@
             <a id="sign_in" href="{{ route('register') }}" class="nav-item nav-link">Регистрация</a>  
             @endguest
             @auth
+            <a href="/basket" class="nav-item nav-link">В корзину</a>
             <a href="/account" class="nav-item nav-link">В кабинет</a>
             <form action="/logout" method="POST" class="form-inline">
               @csrf

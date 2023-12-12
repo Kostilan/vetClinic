@@ -40,5 +40,5 @@ Route::post('/edit_product', [App\Http\Controllers\ProductController::class, 'ed
 
 Route::delete('/delete_product/{product}', [App\Http\Controllers\ProductController::class, 'delete_product'])->name('delete_product');
 
-// Продукт
+// Корзина
 Route::get('/basket', [App\Http\Controllers\ProductController::class,'basket']);

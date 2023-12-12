@@ -10,6 +10,10 @@ use App\Models\Product_type;
 
 class ProductController extends Controller
 {
+    public function sell(){
+        
+    }
+
     public function basket()
     {
         $products = Product::all();

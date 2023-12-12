@@ -73,3 +73,36 @@ $(document).ready(function() {
 
 
 // Срипт корзины
+function addToCart() {
+  let quantity = parseInt(document.getElementById('quantity').value);
+  let title = document.getElementById('title').textContent;
+  let article = document.getElementById('article').textContent;
+  let photo = document.getElementById('photo').src;
+  let product_quantity = parseInt(document.getElementById('quantity_product').textContent);
+  let cost = document.getElementById('cost').textContent;
+
+  let productData = {
+      'title': title,
+      'article': article,
+      'photo': photo,
+      'quantity': quantity,
+      'product_quantity': product_quantity,
+      'cost': cost
+  };
+
+  if (isNaN(quantity) || isNaN(product_quantity) || quantity <= 0 || quantity > product_quantity) {
+      alert('Введите корректное значение или ваше значение больше количества товаров в магазине');
+  } else {
+      // Проверяем, есть ли уже данные в куках для корзины
+      var cartData = JSON.parse(localStorage.getItem('cart')) || [];
+
+      // Добавляем новый товар в куки
+      cartData.push(productData);
+
+      // Сохраняем обновленные данные в куках
+      localStorage.setItem('cart', JSON.stringify(cartData));
+
+      alert('Товар добавлен в корзину!');
+  }
+}
+

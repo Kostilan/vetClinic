@@ -67,7 +67,7 @@ class UserController extends Controller
             'login' => $user['login'],
             'password' => $user['password'],
         ]);
-        return redirect('/account')->with("success",  "");
+        return redirect('/account')->with("success",  "Вы успешно зарегистрировались!");
     }
 
     // Аутентификация
@@ -95,10 +95,10 @@ class UserController extends Controller
             // Проверка роли пользователя
         if ($user->role_id == '1') {
             // Действия для пользователя с ролью 'admin'
-            return redirect()->route('admin');
+            return redirect()->route('admin')->with("success",  "Вы успешно авторизовались!");
         } elseif ($user->role_id == '2') {
             // Действия для пользователя с ролью 'user'
-            return redirect()->route('account');
+            return redirect()->route('account')->with("success",  "Вы успешно авторизовались!");
         }
     } else {
             return back()->withErrors(['login' => 'Неверные данные']);
@@ -108,7 +108,7 @@ class UserController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect('/');
+        return redirect('/')->with("success",  "Вы успешно авторизовались!");
     }
 
     // Аккаунт
@@ -141,6 +141,19 @@ class UserController extends Controller
             'email' => 'required|email',
             'birthday' => 'required|string|max:50',
             'phone' => 'required|string|max:12|min:12',
+        ], [
+            'surname.required' => 'Поле "Фамилия" обязательно для заполнения.',
+            'name.required' => 'Поле "Имя" обязательно для заполнения.',
+            'patronymic.required' => 'Поле "Отчество" обязательно для заполнения.',
+            'login.required' => 'Поле "Логин" обязательно для заполнения.',
+            'email.required' => 'Поле "Email" обязательно для заполнения.',
+            'email.email' => 'Пожалуйста, введите корректный адрес электронной почты.',
+            'email.unique' => 'Пользователь с таким адресом электронной почты уже зарегистрирован.',
+            'birthday.required' => 'Поле "Дата рождения" обязательно для заполнения.',
+            'phone.required' => 'Поле "Телефон" обязательно для заполнения.',
+            'phone.string' => 'Поле "Телефон" должно быть строкой.',
+            'phone.max' => 'Телефонный номер должен содержать максимум 12 символов.',
+            'phone.min' => 'Телефонный номер должен содержать минимум 12 символов.',
         ]);
 
         // $user = $request->all();

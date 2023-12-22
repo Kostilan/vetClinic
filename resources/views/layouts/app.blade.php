@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/bootstrap-reboot.min.css">
     <link rel="stylesheet" href="css/bootstrap-utilities.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link href="{{ asset('/css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('style.css') }}" rel="stylesheet" type="text/css">
     <script src="js/jquery-3.7.0.min.js"></script>
     <script src="js/index.js"></script>
     <script src="js/bootstrap.min.js"></script>

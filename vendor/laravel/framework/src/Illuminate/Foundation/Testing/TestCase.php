@@ -6,18 +6,16 @@ use Carbon\CarbonImmutable;
 use Illuminate\Console\Application as Artisan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bootstrap\HandleExceptions;
-use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
-use Illuminate\Foundation\Http\Middleware\TrimStrings;
 use Illuminate\Queue\Queue;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\ParallelTesting;
-use Illuminate\Support\Sleep;
 use Illuminate\Support\Str;
 use Illuminate\View\Component;
 use Mockery;
 use Mockery\Exception\InvalidCountException;
 use PHPUnit\Framework\TestCase as BaseTestCase;
+use PHPUnit\Util\Annotation\Registry;
 use Throwable;
 
 abstract class TestCase extends BaseTestCase
@@ -31,7 +29,8 @@ abstract class TestCase extends BaseTestCase
         Concerns\InteractsWithExceptionHandling,
         Concerns\InteractsWithSession,
         Concerns\InteractsWithTime,
-        Concerns\InteractsWithViews;
+        Concerns\InteractsWithViews,
+        Concerns\MocksApplicationServices;
 
     /**
      * The Illuminate application instance.
@@ -166,26 +165,6 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * {@inheritdoc}
-     */
-    protected function runTest(): mixed
-    {
-        $result = null;
-
-        try {
-            $result = parent::runTest();
-        } catch (Throwable $e) {
-            if (! is_null(static::$latestResponse)) {
-                static::$latestResponse->transformNotSuccessfulException($e);
-            }
-
-            throw $e;
-        }
-
-        return $result;
-    }
-
-    /**
      * Clean up the testing environment before the next test.
      *
      * @return void
@@ -246,11 +225,8 @@ abstract class TestCase extends BaseTestCase
         Component::flushCache();
         Component::forgetComponentsResolver();
         Component::forgetFactory();
-        ConvertEmptyStringsToNull::flushState();
-        HandleExceptions::forgetApp();
         Queue::createPayloadUsing(null);
-        Sleep::fake(false);
-        TrimStrings::flushState();
+        HandleExceptions::forgetApp();
 
         if ($this->callbackException) {
             throw $this->callbackException;
@@ -266,17 +242,10 @@ abstract class TestCase extends BaseTestCase
     {
         static::$latestResponse = null;
 
-        foreach ([
-            \PHPUnit\Util\Annotation\Registry::class,
-            \PHPUnit\Metadata\Annotation\Parser\Registry::class,
-        ] as $class) {
-            if (class_exists($class)) {
-                (function () {
-                    $this->classDocBlocks = [];
-                    $this->methodDocBlocks = [];
-                })->call($class::getInstance());
-            }
-        }
+        (function () {
+            $this->classDocBlocks = [];
+            $this->methodDocBlocks = [];
+        })->call(Registry::getInstance());
     }
 
     /**
@@ -321,5 +290,20 @@ abstract class TestCase extends BaseTestCase
                 }
             }
         }
+    }
+
+    /**
+     * This method is called when a test method did not execute successfully.
+     *
+     * @param  \Throwable  $exception
+     * @return void
+     */
+    protected function onNotSuccessfulTest(Throwable $exception): void
+    {
+        parent::onNotSuccessfulTest(
+            is_null(static::$latestResponse)
+                ? $exception
+                : static::$latestResponse->transformNotSuccessfulException($exception)
+        );
     }
 }

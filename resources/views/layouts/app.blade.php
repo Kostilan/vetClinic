@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/bootstrap-reboot.min.css">
     <link rel="stylesheet" href="css/bootstrap-utilities.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link href="{{ asset('style.css') }}" rel="stylesheet" type="text/css">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
     <script src="js/jquery-3.7.0.min.js"></script>
     <script src="js/index.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -24,7 +24,7 @@
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse text-weight-light" id="navbarNav">
+        <div class="collapse navbar-collapse text-weight-normal" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a href="/" class="nav-item nav-link">Клиника</a>
@@ -42,10 +42,10 @@
                 @endguest
                 @auth
                     <div class="nav-item">
-                        <a href="/basket" class="nav-item nav-link">В корзину</a>
+                        <a href="/basket" class="nav-item nav-link">Корзина</a>
                     </div>
                     <div class="nav-item">
-                        <a href="/account" class="nav-item nav-link">В кабинет</a>
+                        <a href="/account" class="nav-item nav-link">Личный кабинет</a>
                     </div>
                     <div class="nav-item">
                         <form action="/logout" method="POST" class="form-inline">

@@ -9,9 +9,9 @@ use App\Http\Controllers\ProductController;
 
 
 
-Route::get('/', function() { return view('index'); });
-Route::get("/catalog", [ProductController::class, 'catalog']);
-Route::get("/product_sale{id}", [ProductController::class, 'product_sale']);
+Route::get('/', function() { return view('index'); })->name('home');
+Route::get("/catalog", [ProductController::class, 'catalog'])->name('catalogue');
+Route::get("/product/{id}", [ProductController::class, 'product_sale'])->name('product');
 // Регистрация
 Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register');
 Route::post('/signup', [UserController::class, 'signup'])->name('signup');
@@ -38,7 +38,7 @@ Route::get('/edit_products/{product}', [AdminController::class, 'edit_products']
 Route::post('/create_product', [ProductController::class, 'create_product'])->name('create_product');
 Route::post('/edit_product', [ProductController::class, 'edit_product'])->name('edit_product');
 
-Route::delete('/delete_product/{product}', [App\Http\Controllers\ProductController::class, 'delete_product'])->name('delete_product');
+Route::delete('/delete_product/{product}', [ProductController::class, 'delete_product'])->name('delete_product');
 
 // Корзина
-Route::get('/basket', [App\Http\Controllers\ProductController::class,'basket']);
+Route::get('/basket', [ProductController::class,'basket']);

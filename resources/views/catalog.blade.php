@@ -19,7 +19,7 @@
                     <p class="card-text">Тип продукта: {{ $item->Product_special->title_special}}</p>
                     <p class="card-text">Специализация продукта: {{ $item->Product_type->title_type}}</p>
                     <p class="card-text">{{ $item->cost }}₽</p>
-                    <a href="/product_sale{{ $item->id }}" class="btn btn-primary">Подробнее</a>
+                    <a href="{{ route('product', ['id' => $item->id]) }}" class="btn btn-primary">Подробнее</a>
                     <a href="#" class="btn btn-primary">Заказать</a>
                 </div>
             </div>

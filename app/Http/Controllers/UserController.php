@@ -171,4 +171,9 @@ class UserController extends Controller
         
     }
 
+    // питомцы
+    public function pet(){
+        return view('pet');
+    }
+
 }

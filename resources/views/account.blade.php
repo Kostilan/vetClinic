@@ -20,7 +20,7 @@
                         <h3>Личный кабинет</h3>
                     </li>
                     <li class="list-group-item"><a id="accountUser" class="link-dark link-underline-light" href="/accountUser">Обо мне</a></li>
-                    <li class="list-group-item"><a id="accountBookmark" class="link-dark link-underline-light"href="accountBookmark.html">Мои питомцы</a></li>
+                    <li class="list-group-item"><a id="accountBookmark" class="link-dark link-underline-light"href="/pet">Мои питомцы</a></li>
                     <li class="list-group-item"><a id="accountBooks" class="link-dark link-underline-light" href="accountBooks.html">Мои товары</a></li>
                 </ul>
             </div>

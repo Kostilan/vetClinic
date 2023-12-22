@@ -27,6 +27,7 @@ Route::get('/account', [App\Http\Controllers\UserController::class, 'account'])-
 // Аккаунт - обо мне
 Route::get('/accountUser', [App\Http\Controllers\UserController::class, 'accountUser'])->name('accountUser')->middleware('auth');
 Route::post('/accountUserUpdate', [App\Http\Controllers\UserController::class, 'accountUserUpdate'])->name('accountUserUpdate');
+Route::get('/pet', [App\Http\Controllers\UserController::class, 'pet'])->name('pet');
 
 
 // Админ

@@ -15,10 +15,6 @@ use App\Models\Product_special;
 
 class AdminController extends Controller
 {
-    public function index(){
-        return view("admin.index");
-    }
-
     public function create_products(){
         $product_type = Product_type::all();
         $product_special = Product_special::all();

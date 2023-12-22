@@ -1,21 +1,4 @@
-@font-face {
-    font-family: "OpenSans-regular";
-    src: url(../fonts/Open_Sans/static/OpenSans-Regular.ttf);
-}
-@font-face {
-    font-family: "OpenSans-italic";
-    src: url(../fonts/Open_Sans/static/OpenSans_SemiCondensed-Italic.ttf);
-}
-@font-face {
-    font-family: "OpenSans-bold";
-    src: url(../fonts/Open_Sans/static/OpenSans-Bold.ttf);
-}
-@font-face {
-    font-family: "OpenSans-bold-italic";
-    src: url(../fonts/Open_Sans/static/OpenSans-BoldItalic.ttf);
-}
 * {
-    font-family: "OpenSans-regular";
     font-weight: 500;
     margin: 0;
     padding: 0;

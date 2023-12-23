@@ -11,7 +11,7 @@ use App\Http\Controllers\ProductController;
 
 Route::get('/', function() { return view('index'); })->name('home');
 Route::get("/catalog", [ProductController::class, 'catalog'])->name('catalogue');
-Route::get("/product/{id}", [ProductController::class, 'product_sale'])->name('product');
+Route::get("/product_{id}", [ProductController::class, 'product_sale'])->name('product');
 // Регистрация
 Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register');
 Route::post('/signup', [UserController::class, 'signup'])->name('signup');

@@ -3,7 +3,7 @@
 @section('title', 'Кабинет')
 
 @section('content')
-    <main>
+    <main class="border border-secondary rounded m-2 p-3">
         <main class="d-flex">
             <div>
                 <ul class="list-group list-group-flush">

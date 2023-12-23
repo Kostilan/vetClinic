@@ -3,7 +3,7 @@
 @section('title', 'Каталог')
 
 @section('content')
-    <main class="main">
+    <main class="main border border-secondary rounded m-2 p-3">
         <div class="mainWrapper">
             <div class="mainBackground clearfix">
                 <div class="row">
@@ -44,15 +44,19 @@
                                                 <br>
                                                 <span>Специализация продукта:
                                                     {{ $product->Product_type->title_type }}</span>
+                                                <div id="quantity_product" class="d-block">Осталось:
+                                                    {{ $product->product_quantity }} шт.
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 mb-2">
-                                            <div id="quantity_product" class="d-none">{{ $product->product_quantity }}</div>
+                                        <form action="" method="post" class="col-md-2 mb-2">
+                                            @csrf
                                             <input id="quantity" type="number" class="form-control" name="quantity"
                                                 value="0">
-                                        </div>
-                                        <button type="button" class="btn btn-primary" onclick="addToCart()">В
-                                            корзину</button>
+                                            <button type="button" class="btn btn-primary" onclick="addToCart()">
+                                                В корзину
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

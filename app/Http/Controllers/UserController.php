@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\Pet;
+use App\Models\Sell;
 
 
 class UserController extends Controller
@@ -104,7 +107,7 @@ class UserController extends Controller
             return back()->withErrors(['login' => 'Неверные данные']);
         }
     }
-    // Выход 
+    // Выход
     public function logout()
     {
         Auth::logout();
@@ -114,10 +117,13 @@ class UserController extends Controller
     // Аккаунт
     public function account()
     {
-      
+
         return view('account');
     }
-
+    public function editing_pet($id){
+       $pets = Pet::findOrFail($id);
+        return view('edit_pet', ["pets" => $pets]);
+    }
     public function accountUser()
     {
          // Получить текущего авторизованного пользователя
@@ -168,12 +174,110 @@ class UserController extends Controller
         ]);
 
         response()->json(['success' => 'Профиль успешно обновлен!', 'user' => $user]);
-        
+
     }
 
     // питомцы
     public function pet(){
-        return view('pet');
+        $pet =  DB::table('pets')->join('users', 'pets.user_id', '=', 'users.id')->select('pets.*', 'users.name as users_name')->get();
+        return view('pet', ['pet' => $pet]);
+    }
+    public function accountBooks(){
+        $appl = Sell::where('user_id',Auth::id())->get();
+        // $appl = Sell::all();
+        return view('accountBooks', ['appl' => $appl]);
+    }
+    public function delete_pet($id){
+        Pet::find($id)->delete();
+        return redirect('account');
+    }
+
+    public function add_pet_item(){
+        return view('add_pet');
+    }
+    public function edit_pet_in_page(Request $pets, $id){
+
+        $pets->validate([
+            'type' => 'required|string|max:100',
+            'name' => 'required|string|max:100',
+            'genus' => 'required|string|max:100',
+            'color' => 'required',
+            'gender' => 'required',
+            'birthday' => 'required|string|max:50',
+        ],
+        [
+            'type.required' => 'Поле обязательно для заполнения.',
+            'name.required' => 'Поле обязательно для заполнения.',
+            'genus.required' => 'Поле обязательно для заполнения.',
+            'color.required' => 'Поле обязательно для заполнения.',
+            'gender.required' => 'Поле обязательно для заполнения.',
+            'birthday.required' => 'Поле обязательно для заполнения.',
+
+            'type.string' => 'Поле должно быть строкой.',
+            'name.string' => 'Поле должно быть строкой.',
+            'genus.string' => 'Поле должно быть строкой.',
+            'birthday' => 'Поле должно быть строкой.',
+
+            'type.max' => 'Телефонный номер должен содержать максимум 12 символов.',
+            'name.max' => 'Телефонный номер должен содержать минимум 12 символов.',
+            'genus.max' => 'Телефонный номер должен содержать максимум 12 символов.',
+            'birthday.min' => 'Телефонный номер должен содержать минимум 12 символов.',
+        ]);
+        $application_info = Pet::find($id);
+
+        $application_info->type = $pets->input('type');
+        $application_info->name = $pets->input('name');
+        $application_info->genus = $pets->input('genus');
+        $application_info->color = $pets->input('color');
+        $application_info->gender = $pets->input('gender');
+        $application_info->birthday = $pets->input('birthday');
+        $application_info->image = $pets->input('image');
+        $application_info->update();
+        return redirect('/');
+
+    }
+    public function add_pet_in_page(Request $pet){
+        $pet->validate([
+            'type' => 'required|string|max:100',
+            'name' => 'required|string|max:100',
+            'genus' => 'required|string|max:100',
+            'color' => 'required',
+            'gender' => 'required',
+            'birthday' => 'required|string|max:50',
+        ],
+        [
+            'type.required' => 'Поле обязательно для заполнения.',
+            'name.required' => 'Поле обязательно для заполнения.',
+            'genus.required' => 'Поле обязательно для заполнения.',
+            'color.required' => 'Поле обязательно для заполнения.',
+            'gender.required' => 'Поле обязательно для заполнения.',
+            'birthday.required' => 'Поле обязательно для заполнения.',
+
+            'type.string' => 'Поле должно быть строкой.',
+            'name.string' => 'Поле должно быть строкой.',
+            'genus.string' => 'Поле должно быть строкой.',
+            'birthday' => 'Поле должно быть строкой.',
+
+            'type.max' => 'Телефонный номер должен содержать максимум 12 символов.',
+            'name.max' => 'Телефонный номер должен содержать минимум 12 символов.',
+            'genus.max' => 'Телефонный номер должен содержать максимум 12 символов.',
+            'birthday.min' => 'Телефонный номер должен содержать минимум 12 символов.',
+        ]);
+
+        // регистрация
+        $pet_item = $pet->all();
+        Pet::create([
+            'type' => $pet_item["type"],
+            'name' => $pet_item["name"],
+            'genus' => $pet_item["genus"],
+            'color' => $pet_item["color"],
+            'gender' => $pet_item["gender"],
+            'image' => $pet_item["image"],
+            'birthday' => $pet_item["birthday"],
+            "user_id" => Auth::user()->id,
+        ]);
+        return redirect('/account')->with("success",  "Вы успешно зарегистрировались!");
+
     }
 
 }

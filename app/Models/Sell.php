@@ -19,11 +19,11 @@ class Sell extends Model
        ];
 
        public function Product() {
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(Product::class);
         }
 
         public function User() {
             return $this->belongsTo(User::class);
-            }
+        }
 
 }
